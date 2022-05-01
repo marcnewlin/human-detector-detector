@@ -4,9 +4,9 @@ I figured out that the MicRadar-branded LQPF48 package on Seeed's MR24D11C10 rad
 
 In normal operation, the AT32 samples downconverted IQ from the radar IC (an Infineon BGT24LTR11), does some math, and outputs human/no-human/human-fall-down over UART.
 
-It turns out that the AT32 also has a USB full-speed controller, and the USB pins are populated on the 5V pin header on the module.
+The AT32 also features a USB full-speed controller, and the USB pins are populated on the 5V pin header on the module.
 
-This thing was starting to sound like an SDR, so I prototyped some firmware which samples IQ at ~285600 samples/second, and streams it over USB to a Python script on the host. This is constrained by USB speed, but the MCU itself can sample at least 2Ms/s.
+One thing lead to another, and I prototyped some firmware which samples IQ at ~285600 samples/second, and streams it over USB to a Python script on the host. The sample rate is constrained by USB speed, but the MCU itself can sample at least 2Ms/s.
 
 ## proof-of-concept
 
@@ -53,3 +53,5 @@ Make sure [baudline](https://baudline.com/) is in your path, and then run the fo
 ```
 make reset && sleep 1 && ./stream-iq.py | baudline -stdin -channels 2 -quadrature -record -fftsize 2048 -flipcomplex
 ```
+
+![demo.jpg](demo.jpg)
