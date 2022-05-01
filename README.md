@@ -35,7 +35,7 @@ git apply ../openocd.patch
 ./bootstrap
 ./configure
 make -j
-cp src/openocd tcl/
+cp openocd/src/openocd openocd/tcl/
 cd ..
 ```
 
