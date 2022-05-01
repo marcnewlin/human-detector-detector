@@ -14,7 +14,7 @@ This is very much a proof-of-concept and doesn't include any control over eg. tu
 
 ### requirements
 
-- Seeed 24GHz human-detector radar module (MR24D11C10)
+- Seeed 24GHz human-detector radar module (MR24D11C10 or MR24BSD1)
 - sacrificial USB cable
 - J-Link (or some other OpenOCD-compatible SWD programmer)
 
