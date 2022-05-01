@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\extend_sram.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>extend_sram</project>
+        <configuration>extend_sram_224k</configuration>
+      </member>
+      <member>
+        <project>extend_sram</project>
+        <configuration>extend_sram_96k</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

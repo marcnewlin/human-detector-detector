@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\printf.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>printf</project>
+        <configuration>printf</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

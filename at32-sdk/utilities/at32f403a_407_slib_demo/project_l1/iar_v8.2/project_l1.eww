@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\project_l1.ewp</path>
+    </project>
+    <batchBuild>
+        <batchDefinition>
+            <name>all</name>
+            <member>
+                <project>project_l1</project>
+                <configuration>at_start_f403a</configuration>
+            </member>
+            <member>
+                <project>project_l1</project>
+                <configuration>at_start_f407</configuration>
+            </member>
+        </batchDefinition>
+    </batchBuild>
+</workspace>

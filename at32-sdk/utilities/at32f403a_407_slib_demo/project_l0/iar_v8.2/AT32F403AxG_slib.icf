@@ -1,0 +1,70 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x08000000;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x08000000;
+define symbol __ICFEDIT_region_ROM_end__   = 0x080FFFFF;
+
+/* SLIB INSTRUCTION area */
+define symbol __ICFEDIT_region_SLIB_INSTRUCTION_start__ = 0x08001000;
+define symbol __ICFEDIT_region_SLIB_INSTRUCTION_end__   = 0x08001FFF;
+
+/* SLIB DATA area */
+define symbol __ICFEDIT_region_SLIB_DATA_start__ = 0x08002000;
+define symbol __ICFEDIT_region_SLIB_DATA_end__   = 0x08002FFF;
+
+define symbol __ICFEDIT_region_RAM_start__ = 0x20000000;
+define symbol __ICFEDIT_region_RAM_end__   = 0x20017FFF;
+
+/* SLIB RAM region */
+define symbol __ICFEDIT_region_SLIB_RAM_start__ = 0x20017000;
+define symbol __ICFEDIT_region_SLIB_RAM_end__   = 0x20017FFF;
+
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x1000;
+define symbol __ICFEDIT_size_heap__   = 0x1000;
+/**** End of ICF editor section. ###ICF###*/
+
+define memory mem with size = 4G;
+
+/* Reserved 0x08001000 ~ 0x08002FFF as SLIB area */
+define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__]
+                             -mem:[from __ICFEDIT_region_SLIB_INSTRUCTION_start__  to __ICFEDIT_region_SLIB_INSTRUCTION_end__] 
+							               -mem:[from __ICFEDIT_region_SLIB_DATA_start__  to __ICFEDIT_region_SLIB_DATA_end__] ;
+							 
+define region SLIB_INSTRUCTION_region   = mem:[from __ICFEDIT_region_SLIB_INSTRUCTION_start__   to __ICFEDIT_region_SLIB_INSTRUCTION_end__];
+
+define region SLIB_DATA_region   = mem:[from __ICFEDIT_region_SLIB_DATA_start__   to __ICFEDIT_region_SLIB_DATA_end__];
+
+/* Reserved 0x20017000 ~ 0x20017FFF as RAM used for SLIB code */
+define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__]
+                             - mem:[from __ICFEDIT_region_SLIB_RAM_start__   to __ICFEDIT_region_SLIB_RAM_end__];  
+
+define region SLIB_RAM_region = mem:[from __ICFEDIT_region_SLIB_RAM_start__   to __ICFEDIT_region_SLIB_RAM_end__];
+                             
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize by copy { readwrite };
+do not initialize  { section .noinit };
+
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+
+place in ROM_region   { readonly };
+
+/* SLIB INSTRUCTION area */
+place in SLIB_INSTRUCTION_region   { ro object arm_fir_f32.o,
+                              ro object arm_fir_init_f32.o,
+                              ro object fir_filter.o}; 
+
+/* SLIB DATA area */
+place in SLIB_DATA_region   { ro object fir_coefficient.o }; 
+                          
+			  
+place in RAM_region   { readwrite,
+                        block CSTACK, block HEAP };
+                        
+/* Place slib used sram */
+place in SLIB_RAM_region   { readwrite object fir_filter.o }; 
